@@ -1,0 +1,36 @@
+﻿<div class="menu">
+
+
+    <div class="userPanel">
+        <div class="usuarioFoto" style="margin-top:10px"></div>
+        <div class="userNameMenuEsquerdo" >
+            @Session["USUARIO_NOME"].ToString()
+            <br />
+            @Html.ActionLink("Logout", "Logout", "Home", null, new { @style = "font-size: 12px" })
+        </div>
+    </div>
+
+    <div class="header">Navegação principal</div>
+    <ul>
+        <li><span class="glyphicon glyphicon-home"></span>@Html.ActionLink(Resources.Resources.Home, "Index", "Home")</li>
+
+        <li>
+            <span class="glyphicon glyphicon-copy"></span><a href="">Cadastro</a><a class="menu_pai">></a>
+            <ul>
+                <li><span class="glyphicon glyphicon-credit-card"></span>@Html.ActionLink(Resources.Resources.Usuarios, "Index", "Usuarios")</li>
+                <li><span class="glyphicon glyphicon-user"></span>@Html.ActionLink(Resources.Resources.Recursos, "Index", "Recursoes")</li>
+            </ul>
+        </li>
+
+        <li>
+            <span class="glyphicon glyphicon-knight"></span><a href="">Scrum</a><a class="menu_pai">></a>
+                                                                                <ul>
+                                                                                    <li><span class="glyphicon glyphicon-blackboard"></span>@Html.ActionLink(Resources.Resources.QuadroKamban, "Index", "KanbanBoard")</li>
+                                                                                    <li><span class="glyphicon glyphicon-tag"></span><a href="">@Html.ActionLink(Resources.Resources.Historias, "Index", "Historias")</a></li>
+                                                                                    <li><span class="glyphicon glyphicon-resize-horizontal"></span><a href="">@Html.ActionLink(Resources.Resources.Sprint, "Index", "Sprints")</a></li>
+                                                                                    <li><span class="glyphicon glyphicon-hourglass"></span><a href="">@Html.ActionLink(Resources.Resources.Evento, "Index", "Eventoes")</a></li>
+                                                                                </ul>
+        </li>
+        <li><span class="glyphicon glyphicon-home"></span><a href="">@Resources.Resources.Contato</a></li>
+    </ul>
+</div>

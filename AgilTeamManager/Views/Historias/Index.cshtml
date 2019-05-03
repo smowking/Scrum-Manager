@@ -1,0 +1,87 @@
+﻿@model IEnumerable<AgilTeamManager.Core.Models.Historia>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Recurso.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScrumBoardColunas.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prioridade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataAbertura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataTermino)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Observacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdDesenvolvedorResponsavel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdCriadorResponsavel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdProjeto)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recurso.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ScrumBoardColunas.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Prioridade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataAbertura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataTermino)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Observacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdDesenvolvedorResponsavel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdCriadorResponsavel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdProjeto)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

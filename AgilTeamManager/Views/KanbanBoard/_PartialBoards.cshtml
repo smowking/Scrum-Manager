@@ -1,0 +1,118 @@
+﻿@model AgilTeamManager.Core.ViewModel.ScrumBoardViewModel
+
+
+
+<div class="ColumnStyle">
+    <div class="HeaderStyle">
+        <div class="HeaderText">
+            Product Backlog
+        </div>
+        <div class="EditIcon">
+            <div id="botaoAdicionar" class="glyphicon glyphicon-plus" style="cursor: pointer" onclick="EditarSprint()"></div>
+        </div>
+    </div>
+
+    <div id="backlog" class="BodyStyle">
+        <div class="columnId" hidden="hidden">
+            null
+        </div>
+        @if (Model.Historias != null && Model.Historias.Any())
+        {
+            foreach (var item in Model.Historias.Where(c => c.ScrumBoardColunasId == null).OrderByDescending(c => c.Prioridade))
+            {
+                @Html.Partial("_PartialPaperHistoriaModern", item)
+            }
+        }
+    </div>
+</div>
+
+
+
+
+@if (Model.ColunasScrum.Any())
+{
+    for (int i = 0; i < Model.ColunasScrum.Count(); i++)
+    {
+        <div class="ColumnStyle">
+            <div class="HeaderStyle">
+                <div class="HeaderText">
+                    @Html.DisplayFor(modelItem => Model.ColunasScrum[i].Titulo)
+                </div>
+                <div class="EditIcon">
+                    <div id="botaoEditar" class="glyphicon glyphicon-pencil" style="cursor:pointer" onclick="EditarColuna(this)">
+                        <div class="columnId" hidden="hidden">
+                            @Model.ColunasScrum[i].Id
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="@Html.DisplayFor(modelItem => Model.ColunasScrum[i].Titulo).ToString().Replace(" ", "")" class="BodyStyle">
+                <div class="columnId" hidden="hidden">
+                    @Model.ColunasScrum[i].Id
+                </div>
+                @if (Model.Historias != null && Model.Historias.Any())
+                {
+                    foreach (var item in Model.Historias.Where(c => c.ScrumBoardColunasId == Model.ColunasScrum[i].Id).OrderByDescending(c => c.Prioridade))
+                    {
+                        @Html.Partial("_PartialPaperHistoriaModern", item)
+                    }
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div style="text-align:center;font-size:large">
+        @Html.ActionLink("Nova coluna +", "Create", "ScrumBoardColunas")
+    </div>
+}
+
+
+<style type="text/css">
+
+    .ColumnStyle {
+        position: relative;
+        width: 177px;
+        height: 1000px;
+        border-radius: 4px;
+        background-color: Lavender;
+        float: left;
+        margin-right: 10px;
+        box-shadow: 2px 2px lightgray;
+    }
+
+    .HeaderStyle {
+        width: 178px;
+        height: 35px;
+        box-shadow: 1px 2px darkgray;
+        border-radius: 4px;
+        line-height: 35px;
+        color: white;
+        background-color: #3b4e56;
+        padding-left: 15px;
+        padding-right: 10px;
+    }
+
+    .HeaderText {
+        position: relative;
+        float: left;
+        text-align: center;
+        font-size: small
+    }
+
+    .BodyStyle {
+        width: 177px;
+        height: 100%;
+        background-color: Lavender;
+    }
+
+    .EditIcon {
+        position: relative;
+        float: right;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 300;
+    }
+</style>

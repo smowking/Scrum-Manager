@@ -1,0 +1,164 @@
+﻿
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+    <a href="@Url.Action("Index", "Home")">
+        <div class="logotipo">
+
+        </div>
+    </a>
+
+    <a href="@Url.Action("Edit", "Configuracao", new { id = 1})">
+        <div class="configuracoes">
+            <span class="glyphicon glyphicon-cog configuracaoIcone"></span>
+        </div>
+    </a>
+
+
+    <div class="usuario">
+
+        <div class="usuarioFoto"></div>
+
+
+        <div class="menu_vertical">
+            @Session["USUARIO_NOME"].ToString()
+            <ul class="nav navbar-nav">
+                <a href="@Url.Action("Logout", "Home")">
+                    <li>
+                        <span class="glyphicon glyphicon-log-out">   Logout</span>
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </div>
+
+
+
+</div>
+
+<style type="text/css">
+
+    .configuracaoIcone {
+        color: #fff;
+        height: 49px;
+        line-height: 49px;
+        font-size:22px;
+        text-align:center;
+        width:100%
+    }
+
+    .menu_vertical:hover > ul {
+        opacity: 1;
+        visibility: visible;
+    }
+
+
+    .menu_vertical ul li {
+        padding-left: 15px;
+        position: absolute;
+        width: 150px;
+        vertical-align: middle;
+        background-color: #222d32;
+        cursor: pointer;
+        height: 35px;
+        line-height: 35px;
+        border-top: 1px solid #BDC3C7;
+        -webkit-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+    .menu_vertical > ul > li {
+        border-top: 1px solid #F1C40F;
+    }
+
+    .menu_vertical ul {
+        padding-left: 15px;
+        position: absolute;
+        width: 150px;
+        vertical-align: middle;
+        background-color: #222d32;
+        cursor: pointer;
+        visibility: hidden;
+        opacity: 0;
+        height: 35px;
+        line-height: 35px;
+        border-top: 1px solid #BDC3C7;
+        -webkit-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+    .menu_vertical {
+    }
+
+        .menu_vertical ul {
+            list-style: none;
+            visibility: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+    .logotipo {
+        height: 45px;
+        width: 200px;
+        background-color: aqua;
+        Background: url('../../Images/logotipo.png') no-repeat top center;
+        background-size: contain;
+        position: fixed;
+    }
+
+    .navbar-inverse {
+        background-color: #182023;
+        border-color: #29363b;
+    }
+
+
+    .usuarioFoto {
+        height: 40px;
+        width: 40px;
+        float: left;
+        margin: 5px 10px;
+        border-radius: 100%;
+        color: white;
+        line-height: 40px;
+        font-size: 12px;
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover;
+        background-image: url('@Session["USUARIO_FOTO"].ToString()'); /*Session["USUARIO_FOTO"].ToString()*/
+    }
+
+    .usuarioLogado {
+        float: right;
+    }
+
+    .usuario:hover {
+        background-color: #1e90ff; /* Green */
+        color: white;
+    }
+
+    .configuracoes:hover {
+        background-color: #1e90ff; /* Green */
+        color: white;
+    }
+
+    .configuracoes {
+        float: right;
+        height: 49px;
+        width: 52px;
+        color: #fff;
+        position: relative;
+    }
+
+    .usuario {
+        float: right;
+        height: 49px;
+        padding-right: 15px;
+        line-height: 49px;
+        width: 150px;
+        color: #fff;
+        position: relative;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+</style>

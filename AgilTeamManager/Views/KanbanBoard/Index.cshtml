@@ -1,0 +1,155 @@
+﻿@model AgilTeamManager.Core.ViewModel.ScrumBoardViewModel
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
+<style type="text/css">
+    .block {
+        z-index: 9999;
+        cursor: move;
+        /*background-image: url("/Images/pin.png");
+        background-size: cover;*/
+    }
+
+    table.fixed {
+        table-layout: fixed;
+    }
+
+        table.fixed td {
+            overflow: hidden;
+        }
+
+    .TituloColuna {
+        text-align: center;
+        font-family: 'Segoe Script';
+        font-size: x-large;
+        background-color: dodgerblue;
+        color: white;
+    }
+</style>
+
+@{
+    /**/
+    ViewBag.Title = Resources.Resources.QuadroKamban;
+    ViewBag.Description = Resources.Resources.QuadroKambanDescricao;
+}
+
+<br />
+<div style="float:left; width:inherit; overflow:hidden">
+    @Html.Partial("_PartialBoards", Model)
+</div>
+
+@for (int i = 0; i < Model.ColunasScrum.Count(); i++)
+{
+    <script>
+    $("#@Html.DisplayFor(modelItem => Model.ColunasScrum[i].Titulo).ToString().Replace(" ", "")").droppable(
+        {
+            accept: ".block",
+            drop: function (ev, ui) {
+                var droppedItem = $(ui.draggable).clone();
+                droppedItem.draggable({ helper: 'clone' });
+                var productId = jQuery.trim($(droppedItem).children(".productId").val());
+                var columnId = jQuery.trim($(this).children(".columnId").text());
+                BeforePost(productId, columnId, ui, this);
+            }
+        }
+    );
+    </script>
+}
+
+<script>
+
+    $("#backlog").droppable(
+        {
+            accept: ".block",
+            drop: function (ev, ui) {
+                var droppedItem = $(ui.draggable).clone();
+                droppedItem.draggable({ helper: 'clone' });
+                var productId = jQuery.trim($(droppedItem).children(".productId").val());
+                BeforePost(productId, 0, ui, this);
+            }
+        }
+    );
+
+    function BeforePost(productId, boardId, ui, thisit) {
+        $.ajax({
+            url: "@Url.Action("PaperBeforePost", "KanbanBoard")",
+            data: { historiaId: productId, boardId: boardId },
+            method: "POST",
+            dataType: "JSON",
+            success: function (result) {
+                if (result.MessageType == "Success") {
+
+                    var droppedItem = $(ui.draggable).clone();
+                    droppedItem.draggable({ helper: 'clone' });
+                    $(ui.draggable).remove();
+                    $(thisit).append(droppedItem);
+
+                    var productId = jQuery.trim($(droppedItem).children(".productId").val());
+
+                    $.ajax({
+                        url: "@Url.Action("AlterBoard", "KanbanBoard")",
+                        data: { historiaId: productId, boardId: boardId },
+                        method: "POST",
+                        dataType: "JSON",
+                        success: function (result) {
+                            if (result.MessageType == "Success") {
+                                if (boardId === 0) {
+                                    console.log("BoardID: 0");
+                                    $(droppedItem).children("#desenvolvedorFoto").hide();
+                                } else {
+                                    $(droppedItem).children("#desenvolvedorFoto").show();
+                                }
+
+                            } else {
+                                alert('Erro: ' + result.Message);
+                            }
+                        }
+                    });
+
+
+                } else {
+                    alert(result.Message);
+                }
+            }
+        });
+    }
+
+    function EditarColuna(componente) {
+        var columnID = jQuery.trim($(componente).children(".columnId").text());
+        var url = '@Url.Action("Edit", "ScrumBoardColunas", new { id = "__id__" })';
+        window.location.href = url.replace('__id__', columnID);
+    }
+
+    function EditarSprint() {
+        var sprintID = @Model.Sprint.Id;
+        var url = '@Url.Action("Edit", "Sprints", new { id = "__id__" })';
+        window.location.href = url.replace('__id__', sprintID);
+    }
+
+</script>
+
+<script type="text/javascript" language="javascript">
+
+    $(document).ready(function() {
+        $(".block").draggable({ helper: 'clone' });
+    });
+
+    function HistoriaDetalhes(droppedItem) {
+
+        var historiaId = jQuery.trim($(droppedItem).children(".productId").val());
+        window.location = '@Url.Action("Edit", "Historias")/' + historiaId;
+
+        @*alert("You have clicked this twice.");
+
+        $.get("@Url.Action("HistoriaDetalhes", "KanbanBoard")/" + historiaId,
+            function (data) { $('.modal-body').html(data); });
+        $('#myModal').modal('show');
+
+        $('#myModal').on('hidden.bs.modal', function(e) {
+            $('.modal-body').html("");
+        })*@
+
+    }
+
+</script>

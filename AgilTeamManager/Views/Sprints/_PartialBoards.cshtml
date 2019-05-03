@@ -1,0 +1,163 @@
+﻿@model AgilTeamManager.Core.ViewModel.SprintViewModel
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
+
+<div class="ColumnStyle">
+    <div class="HeaderStyle">
+        <div class="HeaderText">
+            Histórias
+        </div>
+    </div>
+
+    <div id="backlog" class="BodyStyle">
+        <div class="columnId" hidden="hidden">
+            null
+        </div>
+        @if (Model.ScrumBoardViewModel.Historias != null && Model.ScrumBoardViewModel.Historias.Any())
+        {
+            foreach (var item in Model.ScrumBoardViewModel.Historias.OrderByDescending(c => c.Prioridade))
+            {
+                @Html.Partial("_PartialPaperHistoriaModern", item)
+            }
+        }
+    </div>
+</div>
+
+<div class="ColumnStyle">
+    <div class="HeaderStyle">
+        <div class="HeaderText">
+            Histórias no sprint
+        </div>
+    </div>
+    <div id="sprintBacklog" class="BodyStyle">
+        <div class="columnId" hidden="hidden">
+            @Model.Sprint.Id
+        </div>
+        @if (Model.ScrumBoardViewModel.HistoriasDoSprint != null && Model.ScrumBoardViewModel.HistoriasDoSprint.Any())
+        {
+            foreach (var item in Model.ScrumBoardViewModel.HistoriasDoSprint.OrderByDescending(c => c.Prioridade))
+            {
+                @Html.Partial("_PartialPaperHistoriaModern", item)
+            }
+        }
+    </div>
+</div>
+
+<style type="text/css">
+
+    .ColumnStyle {
+        position: relative;
+        width: 177px;
+        height: 1000px;
+        border-radius: 4px;
+        background-color: Lavender;
+        float: left;
+        margin-right: 10px;
+        box-shadow: 2px 2px lightgray;
+    }
+
+    .HeaderStyle {
+        width: 178px;
+        height: 35px;
+        box-shadow: 1px 2px darkgray;
+        border-radius: 4px;
+        line-height: 35px;
+        color: white;
+        background-color: #3b4e56;
+        padding-left: 15px;
+        padding-right: 10px;
+    }
+
+    .HeaderText {
+        position: relative;
+        float: left;
+        text-align: center;
+        font-size: small
+    }
+
+    .BodyStyle {
+        width: 177px;
+        height: 100%;
+        background-color: Lavender;
+    }
+
+    .EditIcon {
+        position: relative;
+        float: right;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 300;
+    }
+</style>
+
+
+<script>
+    $("#backlog").droppable(
+        {
+            accept: ".block",
+            drop: function (ev, ui) {
+                var droppedItem = $(ui.draggable).clone();
+                droppedItem.draggable({ helper: 'clone' });
+                $(ui.draggable).remove();
+                $(this).append(droppedItem);
+
+                var productId = jQuery.trim($(droppedItem).children(".productId").val());
+
+                $.ajax({
+                    url: "@Url.Action("AlterBoard", "Sprints")",
+                    data: { historiaId: productId, boardId: 0, sprintId: @Model.Sprint.Id },
+                    method: "POST",
+                    dataType: "JSON",
+                    success: function (result) {
+                        if (result.MessageType == "Success") {
+
+                        } else {
+                            alert('Erro: ' + result.Message);
+                        }
+                    }
+                });
+
+            }
+        }
+    );
+
+    $("#sprintBacklog").droppable(
+        {
+            accept: ".block",
+            drop: function (ev, ui) {
+                var droppedItem = $(ui.draggable).clone();
+                droppedItem.draggable({ helper: 'clone' });
+                $(ui.draggable).remove();
+                $(this).append(droppedItem);
+
+                var productId = jQuery.trim($(droppedItem).children(".productId").val());
+
+                $.ajax({
+                    url: "@Url.Action("AlterBoard", "Sprints")",
+                    data: { historiaId: productId, boardId: 1, sprintId: @Model.Sprint.Id },
+                    method: "POST",
+                    dataType: "JSON",
+                    success: function (result) {
+                        if (result.MessageType == "Success") {
+
+                        } else {
+                            alert('Erro: ' + result.Message);
+                        }
+                    }
+                });
+
+            }
+        }
+    );
+
+</script>
+
+<script type="text/javascript" language="javascript">
+
+    $(document).ready(function () {
+        $(".block").draggable({ helper: 'clone' });
+    });
+
+</script>

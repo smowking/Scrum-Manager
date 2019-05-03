@@ -1,0 +1,153 @@
+﻿@model AgilTeamManager.Core.ViewModel.DashboardViewModel
+
+<style>
+    .containerSprint {
+        margin: 0;
+        padding: 0;
+        min-width: 900px;
+        display: inline-block;
+        width: 100%;
+        height: 60px;
+        margin-bottom: 50px;
+        margin-top: 60px;
+        /*background-color: gray;*/
+    }
+
+    .blockDia {
+        margin-left: -4px;
+        display: inline-block;
+        position: relative;
+        width: 70px;
+        height: 50px;
+    }
+
+    .blockDiaHeader {
+        margin-bottom: 5px;
+        position: relative;
+        height: 15px;
+        top: 0;
+    }
+
+    .blockDiaContainer {
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
+
+    .barraSprint {
+        position: relative;
+        width: 100%;
+        height: 5px;
+        top: 31px;
+        background-color: dodgerblue;
+    }
+
+    .barraTimeLine {
+        display: inline-block;
+        top: 40px;
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        background-color: dodgerblue;
+        line-height: 100%;
+    }
+
+    .barraDia {
+        display: inline-block;
+        left: 28px;
+        position: relative;
+        width: 5px;
+        height: 60px;
+        background-color: dodgerblue;
+        line-height: 100%;
+        border-radius: 5px;
+    }
+
+    .barraDiaLabel:hover {
+        color: black;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    .barraDiaLabel {
+        text-align: center;
+        color: dimgray;
+        font-family: cursive;
+        font-size: 10px;
+    }
+
+    .iconDiaAtual {
+        width: 30px;
+        font-size: 20px;
+        height: 30px;
+        left: 20px;
+        top: -22px;
+        position: absolute;
+    }
+
+    .evento {
+        position: absolute;
+        width: 30px;
+        font-size: 20px;
+        height: 30px;
+        left: 32px;
+        top: 0px;
+        color: maroon;
+        transform: rotate(-60deg);
+    }
+</style>
+
+@for (int i = 0; i < Model.DiasSprint.Count; i++)
+{
+    <div class="blockDia">
+        
+        <div class="blockDiaHeader">
+            @if (@Model.DiasSprint[i].Date == DateTime.Today)
+            {
+                <div class="barraDiaLabel" style="color: black; font-weight: bold; font-size: 12px;">@Model.DiasSprint[i].Date.ToShortDateString()</div>
+                <div class="iconDiaAtual">
+                    <div class="glyphicon glyphicon-triangle-bottom"></div>
+                </div>
+            }
+            else
+            {
+                <div class="barraDiaLabel">@Model.DiasSprint[i].Date.ToShortDateString()</div>
+            }
+        </div>
+        <div class="blockDiaContainer">
+
+            @if (Model.DiasSprint[i].Date < DateTime.Today)
+            {
+                <div class="barraTimeLine" style="background-color: green;"></div>
+            }
+            else
+            {
+                <div class="barraTimeLine"></div>
+            }
+
+            @if (Model.DiasSprint[i].Date < DateTime.Today)
+            {
+                <div class="barraDia" style="background-color: green;"></div>
+            }
+            else
+            {
+                <div class="barraDia"></div>
+            }
+
+
+            @for (int f = 0; f < Model.Eventos.Count; f++)
+            {
+                if ((Model.Eventos[f].Fixo == "S" &&
+                     Model.Eventos[f].DataEvento.Day == Model.DiasSprint[i].Date.Day &&
+                     Model.Eventos[f].DataEvento.Month == Model.DiasSprint[i].Date.Month) ||
+
+                    Model.Eventos[f].DataEvento == Model.DiasSprint[i].Date)
+                {
+                    <div class="evento">
+                        <div class="glyphicon glyphicon-tag"></div></div>
+                }
+            }
+
+        </div>
+    </div>
+}

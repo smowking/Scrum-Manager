@@ -1,0 +1,58 @@
+﻿@model AgilTeamManager.Core.Models.Evento
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Evento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SprintId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SprintId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataEvento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataEvento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fixo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fixo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PorcentagemSprint)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PorcentagemSprint)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

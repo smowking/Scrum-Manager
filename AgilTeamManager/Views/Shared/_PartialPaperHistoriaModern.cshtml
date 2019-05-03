@@ -1,0 +1,117 @@
+﻿@model AgilTeamManager.Core.Models.Historia
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
+<div class="block" ondblclick="HistoriaDetalhes(this)" style="
+  width: 170px;
+  height: 85px;
+  margin-top: 10px;
+  margin-left: 4px;
+  background-color: whitesmoke;
+  box-shadow: 1px 1px 1px 1px gray;
+  border-radius: 5px;
+  ">
+
+	<input type="hidden" class="productId" value="@Html.DisplayFor(modelItem => Model.Id)">
+	<input type="hidden" class="itemColumnId" value="@Html.DisplayFor(modelItem => Model.ScrumBoardColunasId)">
+
+	@if (Model.IdDesenvolvedorResponsavel != null)
+	{
+		<div id="desenvolvedorFoto" style="background-image: url('@Model.FotoDesenvolvedor.ToString()'); /*Session["USUARIO_FOTO"].ToString()*/">
+
+		</div>
+    }
+	else
+	{
+	    <div id="desenvolvedorFoto" style="display: none; background-image: url('@Session["USUARIO_FOTO"].ToString()'); /*Session["USUARIO_FOTO"].ToString()*/">
+
+	    </div>
+	}
+
+	<div id="Numero_Historia" style="
+  width: 170px;
+  background-color: #475e68;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom:2px;
+  box-shadow: 0px 1px gray;
+  border-radius: 5px 5px 0px 0px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  ">
+		@Html.DisplayFor(modelItem => Model.Numero)
+	</div>
+
+	<div id="Descricao" style="
+  width: 165px;
+  font-size: 9px;
+  position: absolute;
+  margin-top: 0px;
+  margin-left: 5px;
+  margin-right: 5px;
+  z-index: 0;
+  ">
+		@Html.DisplayFor(modelItem => Model.Descricao)
+	</div>
+
+	<div id="footer" style="
+	width: 160px;
+	height: 15px;
+	margin-left:5px;
+	margin-top: 51px;
+	border-top: 1px solid gray;
+	">
+		<div id="prioridade" style="
+	  width: 33%;
+	  position: absolute;
+	  line-height: 15px;
+	  font-size: 9px;
+	  ">
+			PR: @Html.DisplayFor(modelItem => Model.Prioridade)
+		</div>
+
+		<div id="data_Abertura" style="
+	  float:right;
+	  line-height: 15px;
+	  font-size: 9px;
+	  text-align: right;
+	  ">
+			@Html.DisplayFor(modelItem => Model.DataAberturaEncurtado)
+		</div>
+	</div>
+
+
+</div>
+
+<style>
+	#desenvolvedorFoto:active {
+		z-index: 9999;
+		  border-radius: 0%;
+	-webkit-transition: all 0.5s ease;
+		-moz-transition: all 0.5s ease;
+		transition: all 0.5s ease;
+		-moz-transform: scale(7) rotate(-5deg) ;
+		-webkit-transform: scale(7) rotate(-5deg) ;
+		-o-transform: scale(7) rotate(-5deg) ;
+		-ms-transform: scale(7) rotate(-5deg) ;
+		transform: scale(7) rotate(-5deg);
+	box-shadow: 1px 1px 1px 1px gray;
+	}
+
+	#desenvolvedorFoto {
+	  z-index: 9998;
+	  width: 15px;
+	  height: 15px;
+	  float: left;
+	  margin: 3px;
+	  border-radius: 100%;
+	  color: white;
+	  line-height: 15px;
+	  font-size: 9px;
+	  background-position: center; /* Center the image */
+	  background-repeat: no-repeat; /* Do not repeat the image */
+	  background-size: cover;
+	}
+</style>

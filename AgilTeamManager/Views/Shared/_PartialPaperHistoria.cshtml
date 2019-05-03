@@ -1,0 +1,78 @@
+﻿@model AgilTeamManager.Core.Models.Historia
+
+
+<div class="block" style="
+         /*position: absolute;*/
+         width:160px;
+         padding-top:22px;
+         padding-bottom:5px;
+         box-shadow: 1px 1px darkgray;
+         padding-right:10px;
+         margin:10px;
+         border:initial;
+         font-family:Georgia;">
+    <ItemTemplate>
+        <ul class="blockContainer">
+            <li class="productId" hidden="hidden">
+                @Html.DisplayFor(modelItem => Model.Id)
+            </li>
+            <li class="itemColumnId" hidden="hidden">
+                @Html.DisplayFor(modelItem => Model.ScrumBoardColunasId)
+            </li>
+            <li class="historiaTitulo">
+                @Html.DisplayFor(modelItem => Model.Numero)
+            </li>
+            <li class="historiaDescricao">
+                @Html.DisplayFor(modelItem => Model.Descricao)
+            </li>
+            <li class="historiaData">
+                @Html.DisplayFor(modelItem => Model.DataAberturaEncurtado)&nbsp;&nbsp;|&nbsp;&nbsp;PR: @Html.DisplayFor(modelItem => Model.Prioridade)
+            </li>
+        </ul>
+    </ItemTemplate>
+</div>
+
+
+<style type="text/css">
+
+    .blockContainer {
+        list-style: none;
+        position: relative;
+        left: -15px;
+    }
+
+    .historiaPrioridade {
+        position: relative;
+        right: -15px;
+        text-align: right;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .historiaTitulo {
+        text-decoration: underline;
+        text-align: center;
+        font-size: small;
+        font-weight: 600;
+    }
+
+    .historiaDescricao {
+        width: 120%;
+        height: 60px;
+        position: relative;
+        left: -15px;
+        background-color: antiquewhite;
+        overflow: auto;
+        padding-top: 10px;
+        text-align: center;
+        font-size: 9px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .historiaData {
+        padding-top: 10px;
+        font-weight: 600;
+        font-size: 9px;
+        width: 177px;
+    }
+</style>

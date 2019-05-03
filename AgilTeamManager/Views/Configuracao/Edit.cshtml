@@ -1,0 +1,55 @@
+﻿@model AgilTeamManager.Core.Models.Configuracao
+
+@{
+    ViewBag.Title = Resources.Resources.Configuracoes;
+    ViewBag.Description = Resources.Resources.DefinicoesGerais;
+}
+
+@{
+    List<SelectListItem> Languages = new List<SelectListItem>();
+    Languages.Add(new SelectListItem { Text = Resources.Resources.Portugues, Value = "pt-BR", Selected = true });
+    Languages.Add(new SelectListItem { Text = Resources.Resources.Ingles, Value = "en-US" });
+    Languages.Add(new SelectListItem { Text = Resources.Resources.Espanhol, Value = "es-MX"});
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Lingua, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Lingua, Languages, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Lingua, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Lingua, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Lingua, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Lingua, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DuracaoDiasSprint, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DuracaoDiasSprint)
+                @Html.ValidationMessageFor(model => model.DuracaoDiasSprint, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
